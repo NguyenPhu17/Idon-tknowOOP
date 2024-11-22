@@ -1,0 +1,304 @@
+/* src/Home.css */
+.home {
+    font-family: 'Arial', sans-serif; /* Chọn font chữ dễ đọc */
+    padding: 20px;
+    background-color: #E0EEE0; /* Nền trang chính màu đen */
+    color: black; /* Chữ trắng */
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #E0EEE0; /* Màu nền chính cho hero section */
+    color: black; /* Màu chữ trắng */
+    border-radius: 8px; /* Bo góc cho phần hero */
+    height: 100vh;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem; /* Kích thước chữ lớn cho tiêu đề */
+}
+
+.hero-section p {
+    font-size: 1.2rem; /* Kích thước chữ vừa phải cho mô tả */
+}
+
+.cta-button {
+    background-color: #E0EEE0; /* Nền nút trắng */
+    color: #000; /* Chữ nút màu đen */
+    border: none;
+    padding: 15px 30px; /* Khoảng cách cho nút */
+    border-radius: 5px; /* Bo góc cho nút */
+    font-size: 1rem; /* Kích thước chữ trong nút */
+    cursor: pointer; /* Con trỏ khi hover vào nút */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+    border: 2px solid #000000;
+}
+
+.cta-button:hover {
+    background-color: #000; /* Nền đen khi hover */
+    color: white; /* Chữ trắng khi hover */
+}
+
+/* src/Home.css */
+.features {
+    margin-top: 40px; /* Khoảng cách trên cho phần tính năng */
+    background-color: #1C1C1C; /* Nền đen cho phần tính năng */
+    padding: 20px; /* Khoảng cách bên trong phần tính năng */
+    border-radius: 50px; /* Bo góc cho phần tính năng */
+    max-width: 1250px; /* Chiều rộng tối đa */
+    width: 100%; /* Chiều rộng 100% */
+    display: flex; /* Sử dụng Flexbox để căn giữa nội dung */
+    flex-direction: column; /* Căn theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    margin-left: auto; /* Tự động căn trái */
+    margin-right: auto; /* Tự động căn phải */
+}
+
+.features h1 {
+    font-size: 4.2rem; /* Tăng kích thước chữ */
+    background: linear-gradient( #4F4F4F, #ffffff); /* Gradient từ xám nhạt sang trắng */
+    background-clip: text; /* Chỉ áp dụng gradient cho phần chữ */
+    -webkit-text-fill-color: transparent; /* Đặt màu chữ thành trong suốt để hiển thị gradient */
+    text-align: center;
+    margin-bottom: 50px; /* Thêm khoảng cách phía dưới */
+}
+
+.feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    background-color: #E0EEE0; /* Nền trắng cho mỗi mục tính năng */
+    color: #000; /* Chữ đen cho mỗi mục tính năng */
+    border-radius: 30px;
+    margin: 10px;
+    padding: 15px; /* Giảm padding để tạo bố cục gọn hơn */
+    width: calc(40% - 30px); /* Chiều rộng mỗi mục tính năng (3 cột) với khoảng cách hợp lý */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho mỗi mục tính năng */
+    opacity: 0;
+    transform: translateY(50px); /* Đẩy xuống một chút để tạo hiệu ứng */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.feature-item:hover{
+    background-color: yellow;
+}
+
+.feature-item.visible {
+    opacity: 1;
+    transform: translateY(0); /* Trả lại vị trí ban đầu */
+}
+
+.feature-icon{
+    font-size: 40px;
+    margin-right: 20px;
+}
+
+.feature-item h2 {
+    margin-top: 0; /* Xóa khoảng cách trên cho tiêu đề tính năng */
+    text-align: center;
+}
+
+.feature-item p {
+    color: #4F4F4F  ;
+}
+
+.one {
+    font-size: 2rem;
+    color: #828282;
+    margin-bottom: 10px;
+}
+
+.two {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.icon{
+    font-size: 70px;
+    margin-right: 20px;
+}
+
+.about h1 {
+    font-size: 3rem; /* Tăng kích thước chữ */
+    text-align: center;
+    margin-bottom: 20px; /* Thêm khoảng cách phía dưới */
+    margin-top: 150px;
+}
+
+.a1 {
+    font-size: 1rem;
+    text-align: center;
+    padding-left: 270px;
+    padding-right: 270px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: #363636;
+}
+
+.about h2{
+    color: #363636;
+}
+
+.about-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.about-item {
+    background-color: #E0EEE0; /* Nền trắng cho mỗi mục tính năng */
+    color: #000; /* Chữ đen cho mỗi mục tính năng */
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px; /* Giảm padding để tạo bố cục gọn hơn */
+    width: calc(40% - 30px); /* Chiều rộng mỗi mục tính năng (3 cột) với khoảng cách hợp lý */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho mỗi mục tính năng */
+}
+
+.about-item p{
+    color: #4F4F4F;
+}
+
+.everything h1 {
+    font-size: 3rem; /* Tăng kích thước chữ */
+    text-align: center;
+    margin-bottom: 20px; /* Thêm khoảng cách phía dưới */
+    margin-top: 150px;
+}
+
+.home-circles{
+    width: 100%;
+    height: 150vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.circles{
+    width: 600px;
+    height: 600px;
+    position: relative;
+    perspective: 50000px;
+    color: black;
+}
+
+.circles span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 18.4%;
+    height: 18.4%;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    font-size: 3rem;
+}
+
+.circles div{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-left: 13.32px solid;
+    border-right: 5.123076px solid;
+    border-top: 13.32px solid transparent; 
+    border-radius: 100%;
+}
+
+.circles div:nth-child(1) {
+    animation: anim-1 1s linear infinite;
+}
+
+.circles div:nth-child(2) {
+    animation: anim-2 1s linear infinite;
+}
+
+.circles div:nth-child(3) {
+    animation: anim-3 1s linear infinite;
+}
+
+@keyframes anim-1 {
+    from {
+        transform: rotateZ(120deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+        transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
+    }
+}
+
+@keyframes anim-2 {
+    from {
+        transform: rotateZ(240deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+        transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
+    }
+}
+
+@keyframes anim-3 {
+    from {
+        transform: rotateZ(360deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+        transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
+    }
+}
+
+.circle-item {
+    max-width: 150px; /* Kích thước của các div nội dung */
+    max-height: 150px;
+    background-color: #ffffff; /* Màu nền */
+    border-radius: 10px; /* Bo góc */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black; /* Màu chữ */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    opacity: 0;
+    transform: translateY(100px); /* Đẩy xuống một chút để tạo hiệu ứng */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    padding: 20px;
+    text-align: center;
+}
+
+.circle-item.visible {
+    opacity: 1; /* Độ mờ khi hiển thị */
+    transform: translateY(0); /* Trở về vị trí ban đầu */
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    color: black;
+    border-radius: 60px;
+    cursor: pointer;
+    display: flex; /* Sử dụng flex để căn giữa icon và văn bản */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    border: 2px solid #000000;
+    text-align: center;
+}
+
+.back-to-top:hover {
+    background-color: black; /* Thay đổi màu khi hover */
+    color: #ffffff;
+}
+
+.back-to-top svg {
+    margin-right: 5px; /* Khoảng cách giữa icon và văn bản */
+}

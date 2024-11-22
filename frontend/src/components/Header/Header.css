@@ -1,0 +1,52 @@
+/* src/Header.css */
+.header {
+    background-color: #E0EEE0; /* Nền trắng */
+    color: #000000; /* Chữ đen */
+    padding: 15px 20px; /* Khoảng cách trên/dưới và trái/phải */
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: space-between; /* Căn giữa logo, nav và tài khoản */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.logo {
+    margin: 0; /* Xóa khoảng cách mặc định */
+}
+
+.nav-center {
+    flex-grow: 1; /* Cho phép nav chiếm không gian còn lại */
+}
+
+.nav-center ul {
+    list-style-type: none; /* Xóa dấu chấm đầu dòng */
+    padding: 0; /* Xóa khoảng cách mặc định */
+    display: flex; /* Sử dụng Flexbox cho menu */
+    justify-content: center; /* Căn giữa các mục menu theo hàng ngang */
+}
+
+.nav-center ul li {
+    margin-left: 20px; /* Khoảng cách giữa các mục menu */
+}
+
+.nav-center ul li a {
+    color: #000000; /* Màu chữ đen */
+    text-decoration: none; /* Xóa gạch chân */
+}
+
+.nav-center ul li a:hover{
+    color: #336699;
+}
+
+.account {
+    display: flex; /* Sử dụng Flexbox để căn chỉnh avatar */
+    align-items: center;
+}
+
+.avatar {
+    color: #000; /* Màu đen cho biểu tượng */
+    cursor: pointer; /* Con trỏ khi hover vào avatar */
+}
+
+.avatar:hover{
+    color: #336699;
+}
+

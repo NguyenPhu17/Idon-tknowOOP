@@ -1,0 +1,134 @@
+/* src/components/DashboardPage.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #E0EEE0;
+    margin: 0;
+    padding: 0;
+}
+
+/* src/components/DashboardPage.css */
+
+/* Card Layout cho Total Income, Expenses và Balance */
+.stats-card-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.color-income {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00DD00;
+    margin: 0;
+}
+
+.color-expense {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF3300  ;
+    margin: 0;
+}
+
+.color-balance {
+    font-size: 22px;
+    font-weight: bold;
+    color: #3498db;
+    margin: 0;
+}
+
+/* Giữ nguyên bố cục cũ cho biểu đồ và phần còn lại */
+.line-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.dashboard-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f6fa;
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+.overview {
+    text-align: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.transactions-view {
+    padding: 20px;
+}
+
+.transaction-item {
+    background-color: #f9f9f9;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #3498db;
+}
+
+.transaction-item p {
+    margin: 5px 0;
+}
+
+.btn {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.line-chart {
+    margin: 30px auto;
+}
+
+.custom-tooltip {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+
