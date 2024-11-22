@@ -25,4 +25,20 @@ public class IncomeService {
     public void deleteIncome(int incomeId) {
         incomeRepository.deleteById(incomeId);
     }
+
+    public Income updateIncome(int incomeId, Income incomeDetails) {
+        // Tìm thu nhập theo ID
+        Income existingIncome = incomeRepository.findById(incomeId)
+                .orElseThrow(() -> new RuntimeException("Income not found with id " + incomeId));
+
+        // Cập nhật các trường của thu nhập
+        existingIncome.setTitle(incomeDetails.getTitle());
+        existingIncome.setAmount(incomeDetails.getAmount());
+        existingIncome.setIncomeDate(incomeDetails.getIncomeDate());
+        existingIncome.setType(incomeDetails.getType());
+        existingIncome.setReference(incomeDetails.getReference());
+
+        // Lưu thu nhập đã được cập nhật
+        return incomeRepository.save(existingIncome);
+    }
 }

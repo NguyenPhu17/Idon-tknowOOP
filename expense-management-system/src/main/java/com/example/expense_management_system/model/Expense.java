@@ -7,74 +7,84 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "expenses")
+@Table(name = "expense") // Liên kết với bảng "expense"
 public class Expense {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false) // Cột "user_id"
+    private Integer userId;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Column(nullable = false) // Cột "amount"
+    private Double amount;
 
-    private double amount;
-    private String description;
+    @Column(nullable = false) // Cột "title"
+    private String title;
 
-    @Column(name = "expense_date")
+    @Column(nullable = false) // Cột "type"
+    private String type;
+
+    @Column(columnDefinition = "TEXT") // Cột "reference"
+    private String reference;
+
+    @Column(name = "expense_date", nullable = false) // Cột "expense_date"
     private Date expenseDate;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    // Constructor mặc định (bắt buộc)
+    public Expense() {}
 
-    // Getters and Setters
-    public int getId() {
+    // Getters và Setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Date getExpenseDate() {
@@ -84,13 +94,4 @@ public class Expense {
     public void setExpenseDate(Date expenseDate) {
         this.expenseDate = expenseDate;
     }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 }
-

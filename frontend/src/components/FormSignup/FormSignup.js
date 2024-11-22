@@ -17,6 +17,8 @@ const FormSignUp = () => {
         password,
         email
       });
+      const userData = response.data;
+      localStorage.setItem('user', JSON.stringify(userData));
       alert('User registered successfully');
       navigate('/'); // Điều hướng về trang chủ
     } catch (error) {

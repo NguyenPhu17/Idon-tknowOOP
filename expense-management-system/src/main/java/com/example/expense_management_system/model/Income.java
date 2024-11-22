@@ -1,6 +1,6 @@
 package com.example.expense_management_system.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class Income {
     private String reference;
 
     @Column(name = "income_date", nullable = false) // Cột "income_date"
-    private LocalDate incomeDate;
+    private Date incomeDate;
 
     // Constructor mặc định (bắt buộc)
     public Income() {}
@@ -87,11 +87,11 @@ public class Income {
         this.reference = reference;
     }
 
-    public LocalDate getIncomeDate() {
+    public Date getIncomeDate() {
         return incomeDate;
     }
 
-    public void setIncomeDate(LocalDate incomeDate) {
+    public void setIncomeDate(Date incomeDate) {
         this.incomeDate = incomeDate;
     }
 }

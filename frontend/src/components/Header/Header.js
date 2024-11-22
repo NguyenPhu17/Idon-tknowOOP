@@ -14,10 +14,10 @@ const Header = () => {
             <h1 className="logo">PNP Tracker</h1>
             <nav className="nav-center">
                 <ul>
-                    <li><Link to="/">Home</Link></li> {/* Sử dụng Link thay vì a */}
-                    <li><Link to="/dashboard">Dashboard</Link></li>
-                    <li><Link to="/income">Incomes</Link></li>
-                    <li><Link to="/expenses">Expenses</Link></li>
+                    <li><Link to="/">Trang chủ</Link></li> {/* Sử dụng Link thay vì a */}
+                    <li><Link to="/dashboard">Thống kê</Link></li>
+                    <li><Link to="/income">Thu nhập</Link></li>
+                    <li><Link to="/expense">Chi tiêu</Link></li>
                 </ul>
             </nav>
             <div className="account">

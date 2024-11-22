@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
@@ -16,15 +16,16 @@ const App = () => {
     const [expenseList, setExpenseList] = useState([]);
 
     const handleAddIncome = async (newIncome) => {
-        console.log("Sending to API:", newIncome); // Log thông tin trước khi gửi yêu cầu
+        console.log("Dữ liệu gửi đến API:", newIncome); // Log dữ liệu gửi
         try {
             const response = await axios.post('http://localhost:8080/api/income/add', newIncome);
-            console.log("Response from API:", response.data); // Log phản hồi từ API
-            setIncomeList(prevList => [...prevList, response.data]); // Cập nhật incomeList
+            console.log("Phản hồi từ API:", response.data); // Log phản hồi từ backend
+            setIncomeList((prevList) => [...prevList, response.data]); // Cập nhật incomeList
         } catch (error) {
-            console.error('Error adding income:', error); // Log lỗi nếu có
+            console.error("Lỗi khi thêm thu nhập:", error.response?.data || error.message);
         }
     };
+
 
     const handleDeleteIncome = async (id) => {
         await axios.delete(`http://localhost:8080/api/income/${id}`);
@@ -32,35 +33,33 @@ const App = () => {
     };
 
     const handleAddExpense = async (newExpense) => {
+        console.log("Dữ liệu gửi đến API:", newExpense); // Log dữ liệu gửi
         try {
-            const response = await axios.post('http://localhost:8080/api/expenses', newExpense); // Gửi yêu cầu POST đến backend
-            setExpenseList(prevList => [...prevList, response.data]); // Cập nhật danh sách chi tiêu với dữ liệu mới
+            const response = await axios.post('http://localhost:8080/api/expense/add', newExpense);
+            console.log("Phản hồi từ API:", response.data); // Log phản hồi từ backend
+            setExpenseList((prevList) => [...prevList, response.data]); // Cập nhật expenseList
         } catch (error) {
-            console.error('Error adding expense:', error);
+            console.error("Lỗi khi thêm chi tiêu:", error.response?.data || error.message);
         }
     };
 
     const handleDeleteExpense = async (id) => {
-        try {
-            await axios.delete(`http://localhost:8080/api/expenses/${id}`); // Gửi yêu cầu DELETE đến backend
-            setExpenseList(prevList => prevList.filter(item => item.id !== id));
-        } catch (error) {
-            console.error('Error deleting expense:', error);
-        }
+        await axios.delete(`http://localhost:8080/api/expense/${id}`);
+        setExpenseList(expenseList.filter(expense => expense.id !== id)); // Cập nhật lại expenseList
     };
 
     return (
         <UserProvider>
             <Router>
-                <Header/>
+                <Header />
                 <Routes>
-                    <Route path="/" element={<Home/>} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/income" element={<IncomePage incomeList={incomeList} onAddIncome={handleAddIncome} onDeleteIncome={handleDeleteIncome} />} />
-                    <Route path="/expenses" element={<ExpensePage expenseList={expenseList} onAddExpense={handleAddExpense} onDeleteExpense={handleDeleteExpense} />} />
-                    <Route path="/dashboard" element={<DashboardPage />} incomeList={incomeList} expenseList={expenseList}/>
-                    <Route path="/signin" element={<FormSignin/>} />
+                    <Route path="/expense" element={<ExpensePage expenseList={expenseList} onAddExpense={handleAddExpense} onDeleteExpense={handleDeleteExpense} />} />
+                    <Route path="/dashboard" element={<DashboardPage />} incomeList={incomeList} expenseList={expenseList} />
+                    <Route path="/signin" element={<FormSignin />} />
                     <Route path="/signup" element={<FormSignup />} />
-                    {/* Sử dụng Navigate để chuyển hướng */}
+                    {/* Sử dụng Navigate để chuyển hướng */} 
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>

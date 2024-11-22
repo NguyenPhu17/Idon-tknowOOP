@@ -176,3 +176,92 @@ select.input-field {
 .delete-icon::after {
     transform: rotate(-45deg);
 }
+
+/* Container chứa cả 2 icon (Sửa và Xóa) */
+.icon-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Thêm một chút khoảng cách giữa các icon */
+    justify-content: flex-start; /* Đảm bảo các icon căn trái */
+}
+
+/* Các button (Sửa và Xóa) */
+.delete-btn,
+.edit-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+    background-color: #f2f2f2;
+    transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+}
+
+.delete-btn:active,
+.edit-btn:active {
+    transform: scale(0.95); /* Hiệu ứng thu nhỏ khi click */
+}
+
+/* Tạo icon xoá */
+.delete-icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.delete-icon::before,
+.delete-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ef4444;
+    top: 50%;
+    left: 0;
+}
+
+.delete-icon::before {
+    transform: rotate(45deg);
+}
+
+.delete-icon::after {
+    transform: rotate(-45deg);
+}
+
+/* Tạo icon bút chì sửa */
+.edit-icon {
+    width: 24px;  /* Tăng kích thước icon */
+    height: 24px; /* Tăng kích thước icon */
+    position: relative;
+}
+
+/* Tạo phần thân bút chì */
+.edit-icon::before {
+    content: '';
+    position: absolute;
+    width: 21px; /* Tăng chiều dài của thân bút chì */
+    height: 2px;
+    background-color: #0099CC;  /* Màu bút chì */
+    top: 50%;
+    left: 4px;
+}
+
+/* Tạo phần mũi bút chì */
+.edit-icon::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 21px; /* Tăng chiều dài của phần mũi bút chì */
+    background-color: #0099CC;  /* Màu bút chì */
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg); /* Xoay thành góc bút chì */
+}

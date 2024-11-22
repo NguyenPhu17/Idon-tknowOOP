@@ -10,7 +10,7 @@ const localizer = momentLocalizer(moment);
 const MyCalendar = ({ events, onSelectDate }) => {
     return (
         <div>
-            <h2>Transaction Calendar</h2>
+            <h2>Lịch</h2>
             <Calendar
                 localizer={localizer}
                 events={events}

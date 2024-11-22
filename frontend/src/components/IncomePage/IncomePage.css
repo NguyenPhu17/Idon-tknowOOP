@@ -102,6 +102,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
 }
 
 .income-title {
@@ -136,7 +137,17 @@ select.input-field {
     padding-right: 2.5rem;
 }
 
-.delete-btn {
+/* Container chứa cả 2 icon (Sửa và Xóa) */
+.icon-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Thêm một chút khoảng cách giữa các icon */
+    justify-content: flex-start; /* Đảm bảo các icon căn trái */
+}
+
+/* Các button (Sửa và Xóa) */
+.delete-btn,
+.edit-btn {
     background: none;
     border: none;
     padding: 0.5rem;
@@ -145,17 +156,25 @@ select.input-field {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.delete-btn:hover {
-    background-color: #fee2e2;
+.delete-btn:hover,
+.edit-btn:hover {
+    background-color: #f2f2f2;
+    transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
 }
 
+.delete-btn:active,
+.edit-btn:active {
+    transform: scale(0.95); /* Hiệu ứng thu nhỏ khi click */
+}
+
+/* Tạo icon xoá */
 .delete-icon {
     position: relative;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 }
 
 .delete-icon::before,
@@ -175,4 +194,34 @@ select.input-field {
 
 .delete-icon::after {
     transform: rotate(-45deg);
+}
+
+/* Tạo icon bút chì sửa */
+.edit-icon {
+    width: 24px;  /* Tăng kích thước icon */
+    height: 24px; /* Tăng kích thước icon */
+    position: relative;
+}
+
+/* Tạo phần thân bút chì */
+.edit-icon::before {
+    content: '';
+    position: absolute;
+    width: 21px; /* Tăng chiều dài của thân bút chì */
+    height: 2px;
+    background-color: #0099CC;  /* Màu bút chì */
+    top: 50%;
+    left: 4px;
+}
+
+/* Tạo phần mũi bút chì */
+.edit-icon::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 21px; /* Tăng chiều dài của phần mũi bút chì */
+    background-color: #0099CC;  /* Màu bút chì */
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg); /* Xoay thành góc bút chì */
 }
