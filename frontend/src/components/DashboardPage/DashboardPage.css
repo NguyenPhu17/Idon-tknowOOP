@@ -76,14 +76,57 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
-.pie-chart-container {
-    text-align: center;
-    margin-top: 40px;
+/* Wrapper cho pie charts */
+.pie-charts-container {
+    display: flex;
+    justify-content: space-around; /* Căn giữa các biểu đồ */
+    flex-wrap: wrap; /* Cho phép hiển thị theo dạng chồng nếu màn hình nhỏ */
+    margin-top: 20px;
+    gap: 30px;
 }
 
-.recharts-legend-item {
-    font-size: 14px;
-    margin: 0 10px;
+/* Wrapper cho mỗi biểu đồ pie */
+.pie-chart-wrapper {
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Cải thiện hiển thị của biểu đồ và các thông tin bên ngoài */
+.pie-chart-wrapper svg {
+    border-radius: 10px; /* Bo góc cho SVG để trông mềm mại */
+    overflow: visible;
+}
+
+/* Responsive cho các pie chart */
+@media (max-width: 768px) {
+    .pie-charts-container {
+        flex-direction: column; /* Chuyển các biểu đồ thành cột khi màn hình nhỏ */
+        align-items: center;
+    }
+
+    .pie-chart-wrapper {
+        width: 250px; /* Điều chỉnh kích thước cho thiết bị nhỏ */
+        height: 250px;
+    }
+}
+
+/* Thêm hover effect cho các pie chart */
+.pie-chart-wrapper:hover {
+    transform: scale(1.05); /* Phóng to khi hover */
+    transition: transform 0.3s ease; /* Tạo hiệu ứng chuyển động mượt mà */
+}
+
+/* Thiết lập cho các phần trăm hiển thị trong biểu đồ */
+.pie-chart-wrapper .recharts-tooltip-wrapper {
+    font-size: 14px; /* Kích thước font của tooltip */
+    color: white; /* Màu chữ trong tooltip */
+    padding: 5px 10px; /* Padding cho tooltip */
+    border-radius: 5px; /* Bo góc tooltip */
 }
 
 .overview {

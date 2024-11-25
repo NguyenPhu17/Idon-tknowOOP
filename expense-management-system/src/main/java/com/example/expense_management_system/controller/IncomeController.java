@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.expense_management_system.dto.IncomePieChartDto;
 import com.example.expense_management_system.model.Income;
 import com.example.expense_management_system.repository.IncomeRepository;
 import com.example.expense_management_system.service.IncomeService;
@@ -60,5 +61,11 @@ public class IncomeController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(null); // Trả về lỗi nếu không tìm thấy thu nhập
         }
+    }
+
+    @GetMapping("/chart/{userId}")
+    public ResponseEntity<List<IncomePieChartDto>> getIncomePieChart(@PathVariable Integer userId) {
+        List<IncomePieChartDto> pieChartData = incomeService.getIncomePieChartData(userId);
+        return ResponseEntity.ok(pieChartData);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.expense_management_system.model.Income;
 import com.example.expense_management_system.repository.IncomeRepository;
+import com.example.expense_management_system.dto.IncomePieChartDto;
 
 @Service
 public class IncomeService {
@@ -40,5 +41,14 @@ public class IncomeService {
 
         // Lưu thu nhập đã được cập nhật
         return incomeRepository.save(existingIncome);
+    }
+
+    public List<IncomePieChartDto> getIncomePieChartData(Integer userId) {
+        List<Object[]> results = incomeRepository.findIncomeGroupedByType(userId);
+
+        // Chuyển đổi từ Object[] thành IncomePieChartDto
+        return results.stream()
+                .map(record -> new IncomePieChartDto((String) record[0], (Double) record[1]))
+                .toList();
     }
 }

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.expense_management_system.model.Expense;
-import com.example.expense_management_system.model.Income;
 import com.example.expense_management_system.repository.ExpenseRepository;
+import com.example.expense_management_system.dto.ExpensePieChartDto;
 
 @Service
 public class ExpenseService {
@@ -16,7 +16,7 @@ public class ExpenseService {
     private ExpenseRepository expenseRepository;
 
     public Expense addExpense(Expense expense) {
-        return expenseRepository.save(expense);  // Lưu đối tượng expense vào cơ sở dữ liệu
+        return expenseRepository.save(expense); // Lưu đối tượng expense vào cơ sở dữ liệu
     }
 
     public List<Expense> getExpensesByUser(int userId) {
@@ -41,5 +41,14 @@ public class ExpenseService {
 
         // Lưu thu nhập đã được cập nhật
         return expenseRepository.save(existingExpense);
+    }
+
+    public List<ExpensePieChartDto> getExpensePieChartData(Integer userId) {
+        List<Object[]> results = expenseRepository.findExpenseGroupedByType(userId);
+
+        // Chuyển đổi từ Object[] thành ExpensePieChartDto
+        return results.stream()
+                .map(record -> new ExpensePieChartDto((String) record[0], (Double) record[1]))
+                .toList();
     }
 }

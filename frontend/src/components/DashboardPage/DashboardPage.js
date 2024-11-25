@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip as PieTooltip } from 'recharts'; // Import thêm các thành phần Pie
 import { format } from 'date-fns';
 import axios from 'axios';
 import { UserContext } from '../../UserContext';
@@ -104,6 +105,35 @@ const DashboardPage = () => {
     const stats = calculateStats();
     const { monthlyIncome, monthlyExpense } = calculateMonthlyStats();
     const chartData = prepareChartData();
+
+    const incomeByCategory = incomeCategories.map(category => {
+        const categoryIncome = incomeList.filter(item => item.type === category).reduce((sum, item) => sum + item.amount, 0);
+        return { name: category, value: categoryIncome };
+    });
+
+    const colorIncome = {
+        salary: '#00DD00',  // Màu xanh lá cho lương
+        reward: '#FFD700',  // Màu vàng cho thưởng
+        invest: '#1E90FF',  // Màu xanh dương cho đầu tư
+        gift: '#FF69B4',    // Màu hồng cho quà tặng
+        subsidy: '#8A2BE2', // Màu tím cho trợ cấp
+        other: '#D3D3D3'    // Màu xám cho khác
+    };
+
+    const expenseByCategory = expenseCategories.map(category => {
+        const categoryExpense = expenseList.filter(item => item.type === category).reduce((sum, item) => sum + item.amount, 0);
+        return { name: category, value: categoryExpense };
+    });
+
+    const colorExpense = {
+        entertainment: '#FF5733',  // Màu đỏ cho giải trí
+        investment: '#1E90FF',     // Màu xanh dương cho đầu tư
+        travel: '#FFA500',         // Màu cam cho du lịch
+        shopping: '#FF69B4',       // Màu hồng cho mua sắm
+        food: '#32CD32',           // Màu xanh lá cho thực phẩm
+        transport: '#FFD700',      // Màu vàng cho phương tiện
+        others: '#D3D3D3'          // Màu xám cho khác
+    };
 
     // Tạo sự kiện cho lịch
     const events = chartData.map(data => ({
@@ -231,6 +261,45 @@ const DashboardPage = () => {
                             <Line type="monotone" dataKey="expense" stroke="#e74c3c" />
                         </LineChart>
                     </div>
+
+                    <div className="pie-charts-container">
+                        <div className="pie-chart-wrapper">
+                            <PieChart width={300} height={300}>
+                                <Pie
+                                    data={incomeByCategory}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%" cy="50%" outerRadius={150} fill="#8884d8"
+                                    labelLine={false}
+                                    label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`} // Hiển thị phần trăm
+                                >
+                                    {incomeByCategory.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={colorIncome[entry.name]} />
+                                    ))}
+                                </Pie>
+                                <PieTooltip />
+                            </PieChart>
+                        </div>
+
+                        <div className="pie-chart-wrapper">
+                            <PieChart width={300} height={300}>
+                                <Pie
+                                    data={expenseByCategory}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%" cy="50%" outerRadius={150} fill="#8884d8"
+                                    labelLine={false}
+                                    label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`} // Hiển thị phần trăm
+                                >
+                                    {expenseByCategory.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={colorExpense[entry.name]} />
+                                    ))}
+                                </Pie>
+                                <PieTooltip />
+                            </PieChart>
+                        </div>
+                    </div>
+
 
                     <MyCalendar
                         events={events}
