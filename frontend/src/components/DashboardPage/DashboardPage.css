@@ -76,6 +76,15 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
+.pie-chart-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.recharts-legend-item {
+    font-size: 14px;
+    margin: 0 10px;
+}
 
 .overview {
     text-align: center;
@@ -130,5 +139,37 @@ body {
     border-radius: 8px;
 }
 
+.monthly-stats {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
 
+.monthly-stats h3 {
+    margin: 10px 0;
+}
 
+.progress-bar-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.progress-bar {
+    height: 20px;
+    width: 100%;
+    background-color: #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+    background-color: #4caf50; /* Màu mặc định */
+}
+
+.progress-bar-over {
+    background-color: #ff0000; /* Màu đỏ khi vượt định mức */
+}

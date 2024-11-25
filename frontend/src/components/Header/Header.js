@@ -18,6 +18,7 @@ const Header = () => {
                     <li><Link to="/dashboard">Thống kê</Link></li>
                     <li><Link to="/income">Thu nhập</Link></li>
                     <li><Link to="/expense">Chi tiêu</Link></li>
+                    <li><Link to="/limit">Định mức</Link></li>
                 </ul>
             </nav>
             <div className="account">

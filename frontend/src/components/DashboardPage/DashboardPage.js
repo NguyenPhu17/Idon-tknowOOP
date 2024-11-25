@@ -11,20 +11,38 @@ const DashboardPage = () => {
     const [expenseList, setExpenseList] = useState([]);
     const [selectedDateTransactions, setSelectedDateTransactions] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [currentMonth, setCurrentMonth] = useState(new Date()); // Theo dõi tháng hiện tại
+
     const expenseCategories = ['entertainment', 'investment', 'travel', 'shopping', 'food', 'transport', 'others'];
     const incomeCategories = ['salary', 'reward', 'invest', 'gift', 'subsidy', 'other'];
 
     const { user } = useContext(UserContext);
     const userId = user ? user.id : null;
 
-    // Define the calculateStats function before it is used
+    // Hàm tính tổng thu nhập và chi tiêu toàn cục
     const calculateStats = () => {
         const totalIncome = incomeList.reduce((sum, item) => sum + item.amount, 0);
         const totalExpense = expenseList.reduce((sum, item) => sum + item.amount, 0);
         return { totalIncome, totalExpense };
     };
 
-    // Fetch income and expense data
+    // Hàm tính tổng thu nhập và chi tiêu trong tháng hiện tại
+    const calculateMonthlyStats = () => {
+        const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+        const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+
+        const monthlyIncome = incomeList
+            .filter(item => new Date(item.date) >= startOfMonth && new Date(item.date) <= endOfMonth)
+            .reduce((sum, item) => sum + item.amount, 0);
+
+        const monthlyExpense = expenseList
+            .filter(item => new Date(item.date) >= startOfMonth && new Date(item.date) <= endOfMonth)
+            .reduce((sum, item) => sum + item.amount, 0);
+
+        return { monthlyIncome, monthlyExpense };
+    };
+
+    // Fetch dữ liệu thu nhập và chi tiêu
     useEffect(() => {
         const fetchFinancialData = async () => {
             if (userId) {
@@ -32,15 +50,15 @@ const DashboardPage = () => {
                     const incomeResponse = await axios.get(`http://localhost:8080/api/income/${userId}`);
                     const expenseResponse = await axios.get(`http://localhost:8080/api/expense/${userId}`);
 
-                    // Normalize data
+                    // Chuẩn hóa dữ liệu
                     const normalizedIncome = incomeResponse.data.map(item => ({
                         ...item,
-                        date: item.incomeDate || item.date // Prefer incomeDate if available
+                        date: item.incomeDate || item.date
                     }));
 
                     const normalizedExpense = expenseResponse.data.map(item => ({
                         ...item,
-                        date: item.expenseDate || item.date // Prefer expenseDate if available
+                        date: item.expenseDate || item.date
                     }));
 
                     setIncomeList(normalizedIncome);
@@ -54,44 +72,40 @@ const DashboardPage = () => {
         fetchFinancialData();
     }, [userId]);
 
-    // Prepare data for the chart
+    // Chuẩn bị dữ liệu cho biểu đồ
     const prepareChartData = () => {
         const dataByDate = {};
 
-        // Aggregate income
         incomeList.forEach(item => {
-            const date = format(new Date(item.date), 'yyyy-MM-dd'); // Ensure consistent date format
+            const date = format(new Date(item.date), 'yyyy-MM-dd');
             if (!dataByDate[date]) {
-                dataByDate[date] = { date, income: 0, expense: 0 }; // Initialize if not yet
+                dataByDate[date] = { date, income: 0, expense: 0 };
             }
             dataByDate[date].income += item.amount;
         });
 
-        // Aggregate expense
         expenseList.forEach(item => {
-            const date = format(new Date(item.date), 'yyyy-MM-dd'); // Ensure consistent date format
+            const date = format(new Date(item.date), 'yyyy-MM-dd');
             if (!dataByDate[date]) {
-                dataByDate[date] = { date, income: 0, expense: 0 }; // Initialize if not yet
+                dataByDate[date] = { date, income: 0, expense: 0 };
             }
             dataByDate[date].expense += item.amount;
         });
 
-        // Convert to array and sort by date
-        const chartData = Object.values(dataByDate)
-            .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date
+        return Object.values(dataByDate)
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
             .map(item => ({
                 ...item,
-                displayDate: format(new Date(item.date), 'yy-MM-dd'), // Format date for display
+                displayDate: format(new Date(item.date), 'yy-MM-dd'),
                 balance: item.income - item.expense
             }));
-
-        return chartData;
     };
 
     const stats = calculateStats();
+    const { monthlyIncome, monthlyExpense } = calculateMonthlyStats();
     const chartData = prepareChartData();
 
-    // Generate events for the calendar
+    // Tạo sự kiện cho lịch
     const events = chartData.map(data => ({
         title: `${data.balance.toLocaleString()} VND`,
         start: new Date(data.date),
@@ -100,11 +114,9 @@ const DashboardPage = () => {
         color: data.balance >= 0 ? '#00DD00' : '#FF3300'
     }));
 
-    // Handle date selection on the calendar
-    // Hàm xử lý khi chọn ngày từ lịch
+    // Xử lý khi chọn ngày trên lịch
     const handleSelectDate = (slotInfo) => {
-        // Đảm bảo ngày được chọn có định dạng 'YY-MM-DD'
-        const selectedDateStr = format(new Date(slotInfo.start), 'yy-MM-dd'); // Định dạng ngày thành 'YY-MM-DD'
+        const selectedDateStr = format(new Date(slotInfo.start), 'yy-MM-dd');
 
         const transactionsForDate = [
             ...incomeList.filter(item => format(new Date(item.date), 'yy-MM-dd') === selectedDateStr),
@@ -115,19 +127,59 @@ const DashboardPage = () => {
         setSelectedDate(selectedDateStr);
     };
 
+    // Xử lý khi chuyển tháng trên lịch
+    const handleMonthChange = (date) => {
+        setCurrentMonth(date);
+    };
 
-    // Handle returning to the calendar view
+    // Xử lý quay lại lịch
     const handleBackToCalendar = () => {
         setSelectedDate(null);
         setSelectedDateTransactions([]);
     };
 
+    const [monthlyLimit, setMonthlyLimit] = useState(null); // Định mức chi tiêu tháng
+    const [progressPercentage, setProgressPercentage] = useState(0); // Phần trăm chi tiêu
+
+    useEffect(() => {
+        const fetchMonthlyLimit = async () => {
+            if (userId) {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/limit-expenses/${userId}`);
+                    const limits = response.data;
+
+                    // Lấy định mức của tháng hiện tại
+                    const currentMonthStr = format(currentMonth, 'yyyy-MM');
+                    const limitForMonth = limits.find(limit => limit.month === currentMonthStr);
+
+                    if (limitForMonth) {
+                        setMonthlyLimit(limitForMonth.limitAmount);
+
+                        // Tính phần trăm chi tiêu
+                        const percentage = (monthlyExpense / limitForMonth.limitAmount) * 100;
+                        setProgressPercentage(Math.min(percentage, 100)); // Giới hạn tối đa là 100%
+                        if (percentage > 100) {
+                            alert('CẢNH BÁO: Bạn đã vượt định mức chi tiêu tháng này!');
+                        }
+                    } else {
+                        setMonthlyLimit(null);
+                        setProgressPercentage(0);
+                    }
+                } catch (error) {
+                    console.error("Error fetching monthly limit:", error);
+                }
+            }
+        };
+
+        fetchMonthlyLimit();
+    }, [userId, currentMonth, monthlyExpense]); // Chạy lại khi userId, tháng hiện tại, hoặc tổng chi tiêu thay đổi
+
     return (
         <div className="dashboard-container">
             {selectedDate ? (
                 <div className="transactions-view">
-                    <h3>Giao dịch của ngày {selectedDate}</h3>
-                    <button onClick={handleBackToCalendar} className="btn">Quay về</button>
+                    <h3>Giao dịch của ngày {selectedDate}</h3>
+                    <button onClick={handleBackToCalendar} className="btn">Quay về</button>
                     {selectedDateTransactions.length > 0 ? (
                         selectedDateTransactions.map(trans => (
                             <div
@@ -135,36 +187,35 @@ const DashboardPage = () => {
                                 className="transaction-item"
                                 style={{
                                     borderColor: expenseCategories.includes(trans.type) ? '#FF3300' :
-                                        incomeCategories.includes(trans.type) ? '#2ecc71' : '#ccc', // Kiểm tra danh mục chi tiêu hoặc thu nhập
+                                        incomeCategories.includes(trans.type) ? '#2ecc71' : '#ccc',
                                     borderWidth: '2px',
                                     borderStyle: 'solid'
                                 }}
                             >
-                                <p><strong>Ngày:</strong> {format(new Date(trans.date), 'yy-MM-dd')}</p>
-                                <p><strong>Nội dung:</strong> {trans.title}</p>
-                                <p><strong>Số tiền:</strong> {trans.amount.toLocaleString()} VND</p>
-                                <p><strong>Danh mục:</strong> {trans.type}</p>
+                                <p><strong>Ngày:</strong> {format(new Date(trans.date), 'yy-MM-dd')}</p>
+                                <p><strong>Nội dung:</strong> {trans.title}</p>
+                                <p><strong>Số tiền:</strong> {trans.amount.toLocaleString()} VND</p>
+                                <p><strong>Danh mục:</strong> {trans.type}</p>
                             </div>
                         ))
                     ) : (
-                        <p>Không có giao dịch của ngày này.</p>
+                        <p>Không có giao dịch của ngày này.</p>
                     )}
                 </div>
-
             ) : (
                 <div className="overview">
-                    <h2>Tổng quan</h2>
+                    <h2>Tổng quan</h2>
                     <div className="stats-card-container">
                         <div className="card">
-                            <h3>Tổng Thu nhập</h3>
+                            <h3>Tổng Thu nhập</h3>
                             <p className='color-income'>{stats.totalIncome.toLocaleString()} VND</p>
                         </div>
                         <div className="card">
-                            <h3>Tổng Chi tiêu</h3>
+                            <h3>Tổng Chi tiêu</h3>
                             <p className='color-expense'>{stats.totalExpense.toLocaleString()} VND</p>
                         </div>
                         <div className="card">
-                            <h3>Số dư</h3>
+                            <h3>Số dư</h3>
                             <p className='color-balance'>{(stats.totalIncome - stats.totalExpense).toLocaleString()} VND</p>
                         </div>
                     </div>
@@ -181,7 +232,33 @@ const DashboardPage = () => {
                         </LineChart>
                     </div>
 
-                    <MyCalendar events={events} onSelectDate={handleSelectDate} />
+                    <MyCalendar
+                        events={events}
+                        onSelectDate={handleSelectDate}
+                        onNavigate={handleMonthChange} // Xử lý thay đổi tháng
+                    />
+                    <div className="monthly-stats">
+                        <h3>Tổng thu nhập tháng: <span className="color-income">{monthlyIncome.toLocaleString()} VND</span></h3>
+                        <h3>Tổng chi tiêu tháng: <span className="color-expense">{monthlyExpense.toLocaleString()} VND</span></h3>
+                        {/* Progress Bar - Hiển thị định mức và tiến độ */}
+                        {monthlyLimit !== null && (
+                            <div className="progress-bar-container">
+                                <h3>Định mức chi tiêu tháng: <span>{monthlyLimit.toLocaleString()} VND</span></h3>
+                                <div className="progress-bar">
+                                    <div
+                                        className="progress-bar-fill"
+                                        style={{
+                                            width: `${progressPercentage}%`,
+                                            backgroundColor: progressPercentage >= 100 ? '#e74c3c' : '#2ecc71',
+                                        }}
+                                    >
+                                        {progressPercentage.toFixed(1)}%
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
                 </div>
             )}
         </div>

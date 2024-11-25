@@ -7,6 +7,7 @@ import IncomePage from './components/IncomePage/IncomePage';
 import DashboardPage from './components/DashboardPage/DashboardPage';
 import FormSignin from './components/FormSignin/FormSignin';
 import FormSignup from './components/FormSignup/FormSignup';
+import LimitPage from './components/LimitPage/LimitPage';
 import axios from 'axios'; // Thêm thư viện Axios để gọi API
 import './App.css';
 import { UserProvider } from './UserContext'; // Nhập UserProvider
@@ -59,6 +60,7 @@ const App = () => {
                     <Route path="/dashboard" element={<DashboardPage />} incomeList={incomeList} expenseList={expenseList} />
                     <Route path="/signin" element={<FormSignin />} />
                     <Route path="/signup" element={<FormSignup />} />
+                    <Route path="/limit" element={<LimitPage />} />
                     {/* Sử dụng Navigate để chuyển hướng */} 
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.expense_management_system.model.Expense;
-import com.example.expense_management_system.model.Income;
 import com.example.expense_management_system.repository.ExpenseRepository;
 import com.example.expense_management_system.service.ExpenseService;
-import com.example.expense_management_system.service.IncomeService;
 
 @RestController
 @RequestMapping("/api/expense")
